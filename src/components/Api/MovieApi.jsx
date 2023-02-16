@@ -9,7 +9,7 @@ export const getTrendingMovies = async () => {
   return res;
 };
 
-export const getMovieByQuary = async query => {
+export const getMovieByQuary = async (query, page) => {
   const searchQuery = query.trim();
   // const res = await axios.get(
   //   `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
@@ -19,7 +19,7 @@ export const getMovieByQuary = async query => {
       api_key: API_KEY,
       query: searchQuery,
       language: 'en-US',
-      page: 1,
+      page: page,
       include_adult: false,
     },
   });
