@@ -45,9 +45,6 @@ export const Pagination = ({ pages, changePage }) => {
       pageCount={pages}
       previousLabel="<"
       renderOnZeroPageCount={null}
-      // breakLinkClassName
-      // breakClassName
-      // containerClassName
     />
   );
 };

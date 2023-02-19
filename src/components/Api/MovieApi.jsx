@@ -6,10 +6,10 @@ export const getTrendingMovies = async () => {
   const res = await axios.get(
     `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
   );
-  return res;
+  return res.data;
 };
 
-export const getMovieByQuary = async (query, page) => {
+export const getMovieByQuery = async (query, page) => {
   const searchQuery = query.trim();
   // const res = await axios.get(
   //   `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
@@ -23,7 +23,7 @@ export const getMovieByQuary = async (query, page) => {
       include_adult: false,
     },
   });
-  return res;
+  return res.data;
 };
 
 export const getMovieById = async movie_id => {
@@ -39,7 +39,7 @@ export const getMovieById = async movie_id => {
       },
     }
   );
-  return res;
+  return res.data;
 };
 
 export const getMovieReviews = async movie_id => {
@@ -56,7 +56,7 @@ export const getMovieReviews = async movie_id => {
       },
     }
   );
-  return res;
+  return res.data;
 };
 
 export const getMovieCredits = async movie_id => {
@@ -72,5 +72,5 @@ export const getMovieCredits = async movie_id => {
       },
     }
   );
-  return res;
+  return res.data;
 };

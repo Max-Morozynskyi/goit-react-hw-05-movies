@@ -1,7 +1,8 @@
-import { getMovieByQuary } from 'components/Api/MovieApi';
+import { getMovieByQuery } from 'components/Api/MovieApi';
 import { useEffect, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { Link } from 'react-router-dom';
 
 //сделать навигацию, проверка на 404 запроса. 404 изображения, стилизовать
 
@@ -32,10 +33,10 @@ export const Movies = () => {
     if (currentQuery === '') {
       return;
     }
-    getMovieByQuary(currentQuery, currentPage)
+    getMovieByQuery(currentQuery, currentPage)
       .then(data => {
-        setSearchedData(data.data);
-        setCurrentPage(data.data.page);
+        setSearchedData(data);
+        setCurrentPage(data.page);
       })
       .catch(err => err);
   }, [currentQuery, currentPage]);
@@ -65,13 +66,13 @@ export const Movies = () => {
             {searchedData.results.map(({ title, id, poster_path }) => {
               return (
                 <li key={id}>
-                  {/* <Link to={`movies/${id}`}> */}
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                    alt={title}
-                  />
-                  <p>{title}</p>
-                  {/* </Link> */}
+                  <Link to={`${id}`}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                      alt={title}
+                    />
+                    <p>{title}</p>
+                  </Link>
                 </li>
               );
             })}
