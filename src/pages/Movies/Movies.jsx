@@ -2,17 +2,16 @@ import { getMovieByQuery } from 'components/Api/MovieApi';
 import { useEffect, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 import { Pagination } from '../../components/Pagination/Pagination';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 //сделать навигацию, проверка на 404 запроса. 404 изображения, стилизовать
 
-// import { Link } from 'react-router-dom';
-
 export const Movies = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [currentQuery, setCurrentQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedData, setSearchedData] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const handleNameChange = evt => {
     setSearchValue(evt.currentTarget.value);
@@ -24,22 +23,24 @@ export const Movies = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    setCurrentQuery(searchValue);
+    setSearchParams({ query: searchValue });
     setSearchValue('');
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    if (currentQuery === '') {
+    const searchQuery = searchParams.get('query') ?? '';
+
+    if (searchQuery === '') {
       return;
     }
-    getMovieByQuery(currentQuery, currentPage)
+    getMovieByQuery(searchQuery, currentPage)
       .then(data => {
         setSearchedData(data);
         setCurrentPage(data.page);
       })
       .catch(err => err);
-  }, [currentQuery, currentPage]);
+  }, [searchParams, currentPage]);
 
   return (
     <main>
@@ -66,7 +67,7 @@ export const Movies = () => {
             {searchedData.results.map(({ title, id, poster_path }) => {
               return (
                 <li key={id}>
-                  <Link to={`${id}`}>
+                  <Link to={`${id}`} state={{ from: location }}>
                     <img
                       src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                       alt={title}

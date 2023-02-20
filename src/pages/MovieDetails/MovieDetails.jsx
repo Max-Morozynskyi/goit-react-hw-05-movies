@@ -1,6 +1,7 @@
 import { getMovieById } from 'components/Api/MovieApi';
 import { useState, useEffect } from 'react';
-import { Outlet, Link, useParams } from 'react-router-dom';
+import { Outlet, Link, useParams, useLocation } from 'react-router-dom';
+import { BsArrowLeft } from 'react-icons/bs';
 
 // add Preloader!
 
@@ -8,6 +9,8 @@ export const MovieDetails = () => {
   const { movieId } = useParams();
   const [currentMovieDetails, setCurrentMovieDetails] = useState({});
   const { title, genres, overview, poster_path, tagline } = currentMovieDetails;
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
     getMovieById(movieId).then(result => setCurrentMovieDetails(result));
@@ -23,13 +26,9 @@ export const MovieDetails = () => {
 
   return (
     <main>
-      <button
-        onClick={() => {
-          console.log(currentMovieDetails);
-        }}
-      >
-        show info
-      </button>
+      <Link to={backLinkHref}>
+        <BsArrowLeft /> Go Back
+      </Link>
       <section>
         <img
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}

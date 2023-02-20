@@ -7,17 +7,28 @@ export const Cast = () => {
   const [castInfo, setCastInfo] = useState([]);
 
   useEffect(() => {
-    getMovieCredits(movieId).then(result => setCastInfo(result.cast));
-    return setCastInfo({});
+    getMovieCredits(movieId).then(result =>
+      setCastInfo(result.cast.slice(0, 15))
+    );
+    return setCastInfo([]);
   }, [movieId]);
 
   return (
-    <button
-      onClick={() => {
-        console.log(castInfo);
-      }}
-    >
-      show info
-    </button>
+    <div>
+      <ul>
+        {castInfo.map(({ character, name, profile_path, id }) => {
+          return (
+            <li key={id}>
+              <img
+                src={`https://image.tmdb.org/t/p/w200${profile_path}`}
+                alt={name}
+              />
+              <h5>{name}</h5>
+              <p>Character: {character}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
