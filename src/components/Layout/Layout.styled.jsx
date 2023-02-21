@@ -4,6 +4,8 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   left: 0;
+  display: flex;
+  justify-content: space-between;
   width: 100vw;
   padding: 20px 40px;
   background-color: beige;
