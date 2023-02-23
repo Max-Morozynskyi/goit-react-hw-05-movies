@@ -14,7 +14,7 @@ export const Home = () => {
   }, []);
   return (
     <main>
-      <HomeTitle>Смотрите ТОП-фильмы этой недели</HomeTitle>
+      <HomeTitle>TOP-movies of this week</HomeTitle>
       <FilmList>
         {trendFilms.map(({ title, id, poster_path }) => {
           return (

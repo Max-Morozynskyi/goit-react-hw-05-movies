@@ -1,6 +1,7 @@
 import { getMovieReviews } from 'components/Api/MovieApi';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ReviewCard, ReviewTime } from './Reviews.styled';
 
 export const Reviews = () => {
   const { movieId } = useParams();
@@ -12,20 +13,18 @@ export const Reviews = () => {
   }, [movieId]);
 
   return (
-    <div>
-      <ul>
-        {rewiewsInfo.map(({ author, content, created_at, id }) => {
-          return (
-            <li key={id}>
-              <h5>Author: {author}</h5>
-              <span>
-                {created_at.slice(0, 16).split('T').reverse().join(' ')}
-              </span>
-              <p>{content}</p>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <ul>
+      {rewiewsInfo.map(({ author, content, created_at, id }) => {
+        return (
+          <ReviewCard key={id}>
+            <h4>Author: {author}</h4>
+            <ReviewTime>
+              {created_at.slice(0, 16).split('T').reverse().join(' ')}
+            </ReviewTime>
+            <p>{content}</p>
+          </ReviewCard>
+        );
+      })}
+    </ul>
   );
 };

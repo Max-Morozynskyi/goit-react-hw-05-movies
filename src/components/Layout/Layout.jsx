@@ -1,5 +1,5 @@
-import { Outlet, NavLink } from 'react-router-dom';
-import { Header, MainNav } from './Layout.styled';
+import { Outlet } from 'react-router-dom';
+import { Header, MainNav, Select, StyledNavLink } from './Layout.styled';
 import { useEffect, useState } from 'react';
 
 export const Layout = () => {
@@ -23,19 +23,19 @@ export const Layout = () => {
     <div>
       <Header>
         <MainNav>
-          <NavLink to="/" end>
+          <StyledNavLink to="/" end>
             Home
-          </NavLink>
-          <NavLink to="/movies">Movies</NavLink>
+          </StyledNavLink>
+          <StyledNavLink to="/movies">Movies</StyledNavLink>
         </MainNav>
 
         <label>
           Choose your language
-          <select name="language" value={language} onChange={changeLang}>
+          <Select name="language" value={language} onChange={changeLang}>
             <option value="en-US">English</option>
             <option value="uk">Українська</option>
             <option value="ru">Русский</option>
-          </select>
+          </Select>
         </label>
 
         <div></div>

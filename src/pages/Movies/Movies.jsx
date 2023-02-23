@@ -3,8 +3,18 @@ import { useEffect, useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import {
+  Container,
+  MovieTitle,
+  MoviesFormTitle,
+  SearchForm,
+  SearchFormBtn,
+  SearchFormInput,
+  SubmitLabel,
+} from './Movies.styled';
+import { FilmList, FilmListItem } from 'pages/Home/Home.styled';
 
-//сделать навигацию, проверка на 404 запроса. 404 изображения, стилизовать
+//сделать навигацию, проверка на 404 запроса. 404 изображения
 
 export const Movies = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -43,47 +53,51 @@ export const Movies = () => {
   }, [searchParams, currentPage]);
 
   return (
-    <main>
-      <h2>Введите название фильма:</h2>
+    <Container>
+      <MoviesFormTitle>Enter the movie title:</MoviesFormTitle>
 
-      <form onSubmit={handleSubmit}>
-        <input
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchFormInput
           name="searchValue"
           type="text"
           autoComplete="off"
           value={searchValue}
           onChange={handleNameChange}
           autoFocus
-          placeholder="Search images and photos"
+          placeholder="Search movies"
         />
-        <button type="submit">
-          <ImSearch size="20" color="blue" />
-          <span>Search</span>
-        </button>
-      </form>
+        <SearchFormBtn type="submit">
+          <ImSearch size="20" color="#616157" />
+          <SubmitLabel>Search</SubmitLabel>
+        </SearchFormBtn>
+      </SearchForm>
       {searchedData.length !== 0 && (
         <div>
-          <ul>
+          <FilmList>
             {searchedData.results.map(({ title, id, poster_path }) => {
               return (
-                <li key={id}>
+                <FilmListItem key={id}>
                   <Link to={`${id}`} state={{ from: location }}>
                     <img
-                      src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                      src={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w400${poster_path}`
+                          : 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/9556d16312333.5691dd2255721.jpg'
+                      }
                       alt={title}
                     />
-                    <p>{title}</p>
+                    <MovieTitle>{title}</MovieTitle>
                   </Link>
-                </li>
+                </FilmListItem>
               );
             })}
-          </ul>
+          </FilmList>
           <Pagination
             pages={searchedData.total_pages}
             changePage={handlePage}
           />
         </div>
       )}
-    </main>
+    </Container>
   );
 };

@@ -44,10 +44,15 @@ html {
   box-sizing: border-box;
   width: 100vw;
   overflow-x: hidden;
+  color: #616157;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+a {
+  text-decoration: none;
 }
