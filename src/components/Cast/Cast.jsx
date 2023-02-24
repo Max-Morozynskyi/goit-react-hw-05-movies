@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ActorCard, ActorList } from './Cast.styled';
 
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [castInfo, setCastInfo] = useState([]);
 
@@ -16,6 +16,7 @@ export const Cast = () => {
 
   return (
     <ActorList>
+      {castInfo.length === 0 && <div>No results found!</div>}
       {castInfo.map(({ character, name, profile_path, id }) => {
         return (
           <ActorCard key={id}>
@@ -36,3 +37,5 @@ export const Cast = () => {
     </ActorList>
   );
 };
+
+export default Cast;

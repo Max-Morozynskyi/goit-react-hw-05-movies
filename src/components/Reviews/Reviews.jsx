@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReviewCard, ReviewTime } from './Reviews.styled';
 
-export const Reviews = () => {
+const Reviews = () => {
   const { movieId } = useParams();
   const [rewiewsInfo, setRewiewsInfo] = useState([]);
 
@@ -14,6 +14,9 @@ export const Reviews = () => {
 
   return (
     <ul>
+      {rewiewsInfo.length === 0 && (
+        <div style={{ marginTop: '15px' }}>No reviews found!</div>
+      )}
       {rewiewsInfo.map(({ author, content, created_at, id }) => {
         return (
           <ReviewCard key={id}>
@@ -28,3 +31,5 @@ export const Reviews = () => {
     </ul>
   );
 };
+
+export default Reviews;

@@ -13,13 +13,14 @@ import {
   SubmitLabel,
 } from './Movies.styled';
 import { FilmList, FilmListItem } from 'pages/Home/Home.styled';
+import { Preloader } from 'components/Preloader/Preloader';
+import imgPoster from '../../img/img_404.jpg';
 
-//сделать навигацию, проверка на 404 запроса. 404 изображения
-
-export const Movies = () => {
+const Movies = () => {
   const [searchValue, setSearchValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedData, setSearchedData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
@@ -44,12 +45,14 @@ export const Movies = () => {
     if (searchQuery === '') {
       return;
     }
+    setIsLoading(true);
     getMovieByQuery(searchQuery, currentPage)
       .then(data => {
         setSearchedData(data);
         setCurrentPage(data.page);
       })
-      .catch(err => err);
+      .catch(err => console.log(err))
+      .finally(setIsLoading(false));
   }, [searchParams, currentPage]);
 
   return (
@@ -71,7 +74,13 @@ export const Movies = () => {
           <SubmitLabel>Search</SubmitLabel>
         </SearchFormBtn>
       </SearchForm>
-      {searchedData.length !== 0 && (
+      {isLoading && <Preloader />}
+      {searchedData.results?.length === 0 && (
+        <div>{`Nothing found on your request "${searchParams.get(
+          'query'
+        )}". Try to search something else!`}</div>
+      )}
+      {searchedData.length !== 0 && searchedData.results.length !== 0 && (
         <div>
           <FilmList>
             {searchedData.results.map(({ title, id, poster_path }) => {
@@ -82,7 +91,7 @@ export const Movies = () => {
                       src={
                         poster_path
                           ? `https://image.tmdb.org/t/p/w400${poster_path}`
-                          : 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/9556d16312333.5691dd2255721.jpg'
+                          : imgPoster
                       }
                       alt={title}
                     />
@@ -101,3 +110,5 @@ export const Movies = () => {
     </Container>
   );
 };
+
+export default Movies;

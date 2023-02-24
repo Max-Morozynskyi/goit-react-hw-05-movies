@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FilmList, FilmListItem, HomeTitle } from './Home.styled';
 import { Link, useLocation } from 'react-router-dom';
 
-export const Home = () => {
+const Home = () => {
   const [trendFilms, setTrendFilms] = useState([]);
   const location = useLocation();
 
@@ -32,3 +32,5 @@ export const Home = () => {
     </main>
   );
 };
+
+export default Home;

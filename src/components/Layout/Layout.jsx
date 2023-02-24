@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Header, MainNav, Select, StyledNavLink } from './Layout.styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
+import { Preloader } from 'components/Preloader/Preloader';
 
 export const Layout = () => {
   const [language, setLanguage] = useState('en-US');
@@ -40,7 +41,9 @@ export const Layout = () => {
 
         <div></div>
       </Header>
-      <Outlet />
+      <Suspense fallback={<Preloader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
